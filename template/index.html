@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title> backend home</title>
+  </head>
+  <body>
+    <h1> Database information </h1>
+
+    <table border="1">
+      <tr>
+        <th>name</th>
+        <th>Image</th>
+        <th>Upload time</th>
+
+
+      </tr>
+
+        {%for each_image in a %}
+          <tr>
+            <td>
+            {{each_image.name}}
+            </td>
+            <td><p><img src="{{ each_image.image.url }}" width="300px"></p>
+            </td>
+          </td>
+          <td>{{each_image.time}}
+          </td>
+        </tr>
+            {%endfor%}
+
+    </table>
+
+  </body>
+</html>

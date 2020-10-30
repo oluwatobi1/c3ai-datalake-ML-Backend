@@ -19,6 +19,7 @@ from rest_framework import routers
 from imageProj.imageapp import views
 from django.conf.urls.static import static
 from django.conf import settings
+from imageProj.imageapp import views
 
 router = routers.DefaultRouter()
 router.register(r'image', views.ImageViewSet)
@@ -27,8 +28,9 @@ router.register(r'image', views.ImageViewSet)
 # Additionally, we include login URLs for the browsable API.
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include(router.urls)),
-    path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
+    path('route/', include(router.urls)),
+    path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    path('', views.index, name="homepage")
 ]
 #including the static files from the media url
 urlpatterns+=static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
