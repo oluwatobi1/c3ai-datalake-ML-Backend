@@ -125,6 +125,7 @@ USE_TZ = True
 CORS_ALLOWED_ORIGINS = [
     "https://covid19reispar.herokuapp.com",
     "http://localhost:4200",
+    "http://127.0.0.1:4200"
 ]
 
 STATIC_URL = '/static/'

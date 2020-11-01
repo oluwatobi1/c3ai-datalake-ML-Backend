@@ -22,7 +22,7 @@ from django.conf import settings
 from imageProj.imageapp import views
 
 router = routers.DefaultRouter()
-router.register(r'image', views.ImageViewSet)
+router.register(r'image', views.ImageViewSet, basename='image')
 
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browsable API.

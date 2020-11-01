@@ -60,35 +60,38 @@ def predict_image(request):
     return render(request, 'index.html', context)
 
 
+    #
+
+
+
+
 class ImageViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows Image to be viewed or edited.
     """
-    queryset = Image.objects.all()
+    queryset = Image.objects.order_by('-id')[:1]
     serializer_class = ImageSerializer
-
     context_object_name = "homepage"
     template_name = 'index.html'
+
+
+    def pred(imag):
+        img = image.load_img(imag, target_size=(img_height, img_width))
+        x_arr=image.img_to_array(img)
+
+        x=x_arr.reshape(-1, img_height* img_width)/255.0
+        with model_graph.as_default():
+            with tf_session.as_default():
+                pred = trained_model.predict(x)
+        import numpy as np
+        pred_label = np.argmax(pred[0])
+        print(pred_label, " shdowwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww")
+        return pred_label
 
 #Overiding post to recieve only the uploaded images
     def post(self, request, *args, **kwargs):
         name = request.data['name']
         images = request.data['image']
+        pred = self.pred(request.data['image'])
         print("Created /....................................")
-        Image.objects.create(name=name, image = images)
-        #convert to custom function
-        fs = FileSystemStorage()
-        filePathName = fs.save(name, image)
-        filePathName = fs.url(filePathName)
-        test_image='.'+filePathName
-        img = image.load_img(test_image, target_size=(img_height, img_width))
-        x_arr=image.img_to_array(img)
-
-        x=x_arr.reshape(-1, img_height* img_width)/255.0
-
-        with model_graph.as_default():
-            with tf_session.as_default():
-                pred = trained_model.predict(x)
-
-        import numpy as np
-        pred_label = np.argmax(pred[0])
+        Image.objects.create(name=name, image = images, prediction=pred)
