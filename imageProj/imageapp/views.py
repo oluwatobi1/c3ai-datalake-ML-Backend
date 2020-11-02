@@ -7,6 +7,8 @@ from imageProj.imageapp.models import Image
 from django.http import HttpResponse
 from django.shortcuts import render
 
+
+##############remove start
 from django.core.files.storage import FileSystemStorage
 
 
@@ -29,18 +31,16 @@ with model_graph.as_default():
     tf_session = tf.compat.v1.Session()
     with tf_session.as_default():
         trained_model=load_model('./model/my_model.h5')#### trained_model
-
+#####################remove end
 
 def index(request):
     images = Image.objects.all().order_by("-time")
     context={"a": images}
     return render(request, 'index.html', context)
 
-
+############# remove start
 def predict_image(request):
-
     fileObj = request.FILES['myfile']
-
     fs = FileSystemStorage()
     filePathName = fs.save(fileObj.name, fileObj)
     filePathName = fs.url(filePathName)
@@ -60,9 +60,7 @@ def predict_image(request):
     return render(request, 'index.html', context)
 
 
-    #
-
-
+################remove end
 
 
 class ImageViewSet(viewsets.ModelViewSet):
@@ -71,27 +69,9 @@ class ImageViewSet(viewsets.ModelViewSet):
     """
     queryset = Image.objects.order_by('-id')[:1]
     serializer_class = ImageSerializer
-    context_object_name = "homepage"
-    template_name = 'index.html'
-
-
-    def pred(imag):
-        img = image.load_img(imag, target_size=(img_height, img_width))
-        x_arr=image.img_to_array(img)
-
-        x=x_arr.reshape(-1, img_height* img_width)/255.0
-        with model_graph.as_default():
-            with tf_session.as_default():
-                pred = trained_model.predict(x)
-        import numpy as np
-        pred_label = np.argmax(pred[0])
-        print(pred_label, " shdowwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww")
-        return pred_label
 
 #Overiding post to recieve only the uploaded images
     def post(self, request, *args, **kwargs):
         name = request.data['name']
         images = request.data['image']
-        pred = self.pred(request.data['image'])
-        print("Created /....................................")
         Image.objects.create(name=name, image = images, prediction=pred)
