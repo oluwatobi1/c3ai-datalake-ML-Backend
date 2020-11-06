@@ -45,18 +45,18 @@ def predict_image(request):
     filePathName = fs.save(fileObj.name, fileObj)
     filePathName = fs.url(filePathName)
     test_image='.'+filePathName
-    img = image.load_img(test_image, target_size=(img_height, img_width))
-    x_arr=image.img_to_array(img)
+    # img = image.load_img(test_image, target_size=(img_height, img_width))
+    # x_arr=image.img_to_array(img)
+    #
+    # x=x_arr.reshape(-1, img_height* img_width)/255.0
+    # with model_graph.as_default():
+    #     with tf_session.as_default():
+    #         pred = trained_model.predict(x)
+    #
+    # import numpy as np
+    # pred_label = np.argmax(pred[0])
 
-    x=x_arr.reshape(-1, img_height* img_width)/255.0
-    with model_graph.as_default():
-        with tf_session.as_default():
-            pred = trained_model.predict(x)
-
-    import numpy as np
-    pred_label = np.argmax(pred[0])
-
-    context ={"filePathName": filePathName, "prediction": pred_label}
+    context ={"filePathName": filePathName, "prediction": "pred_label"}#
     return render(request, 'index.html', context)
 
 
