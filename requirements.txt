@@ -27,9 +27,9 @@ idna==2.10
 jmespath==0.10.0
 Keras==2.4.3
 Keras-Preprocessing==1.1.2
-Markdown==3.3.3
 numpy==1.18.5
 oauthlib==3.1.0
+opencv-python==4.4.0.46
 opt-einsum==3.3.0
 Pillow==7.2.0
 protobuf==3.13.0
