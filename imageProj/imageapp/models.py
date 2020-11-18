@@ -49,6 +49,9 @@ with model_graph.as_default():
         predictions = Dense(2, activation='softmax')(x)
         # this is the model we will train
         model = Model(inputs=base_model.input, outputs=predictions)
+        # The model weights (that are considered the best) are loaded into the model
+        model.load_weights('model/EfficientNetB6.h5') 
+
 
 def upload_path(instance, filename):
     return '/'.join(['covid_images', filename])
@@ -74,7 +77,6 @@ class Image(models.Model):
         with model_graph.as_default():
             with tf_session.as_default():
                 preds = model.predict(image, steps=1) # Predict image
-
         pred_label = preds[0][0]
         return pred_label
 
