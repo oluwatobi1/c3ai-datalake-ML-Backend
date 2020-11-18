@@ -20,6 +20,8 @@ from tensorflow.keras.optimizers import Adam
 from tensorflow.keras.callbacks import ModelCheckpoint
 import os, cv2
 
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+model_dir = os.path.join(BASE_DIR, 'model/EfficientNet.h5')
 
 ROWS = 256
 COLS = 256
@@ -50,7 +52,7 @@ with model_graph.as_default():
         # this is the model we will train
         model = Model(inputs=base_model.input, outputs=predictions)
         # The model weights (that are considered the best) are loaded into the model
-        model.load_weights('model/EfficientNetB6.h5') 
+        model.load_weights("./model/EfficientNet.h5") 
 
 
 def upload_path(instance, filename):
