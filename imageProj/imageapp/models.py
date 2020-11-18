@@ -75,7 +75,7 @@ class Image(models.Model):
             with tf_session.as_default():
                 preds = model.predict(image, steps=1) # Predict image
 
-        pred_label = preds
+        pred_label = preds[0][0]
         return pred_label
 
     def save(self, *args, **kwargs):
