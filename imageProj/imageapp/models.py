@@ -4,20 +4,12 @@ from django.utils import timezone
 from django.core.files.storage import FileSystemStorage
 
 
-
-from keras.models import load_model
-from keras.preprocessing import image
 import json
 from tensorflow import Graph
 import tensorflow as tf
 from tensorflow.keras.applications import EfficientNetB6
-from tensorflow import keras
 from tensorflow.keras.models import Model
-from tensorflow.keras import layers
-from tensorflow.keras.preprocessing import image
 from tensorflow.keras.layers import Input, Dense, BatchNormalization, Dropout, GlobalAveragePooling2D
-from tensorflow.keras.optimizers import Adam
-from tensorflow.keras.callbacks import ModelCheckpoint
 import os, cv2
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -70,11 +62,11 @@ class Image(models.Model):
         fileObj =self.image
 
         #to rectify file space bug
-        filename = request.FILES['myfile'].name
+        filename = fileObj.name
         modified_name = ''.join([i for i in filename if i!=" "])
         fs = FileSystemStorage()
         filePathName = fs.save(modified_name, fileObj)
-        ###        
+        ###
         filePathName = fs.url(filePathName)
         test_image='.'+filePathName
         test_image = os.path.join(test_image)
