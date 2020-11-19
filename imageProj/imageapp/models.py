@@ -27,7 +27,6 @@ ROWS = 256
 COLS = 256
 Channel = 3
 
-
 #
 model_graph = Graph()
 with model_graph.as_default():
@@ -52,7 +51,8 @@ with model_graph.as_default():
         # this is the model we will train
         model = Model(inputs=base_model.input, outputs=predictions)
         # The model weights (that are considered the best) are loaded into the model
-        model.load_weights("./model/EfficientNet.h5") 
+        #edit model name directory
+        model.load_weights("./model/EfficientNetB6.h5")
 
 
 def upload_path(instance, filename):
