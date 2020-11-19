@@ -12,7 +12,7 @@ from django.shortcuts import render
 from django.core.files.storage import FileSystemStorage
 
 
-#
+
 # from keras.models import load_model
 # from keras.preprocessing import image
 # import json
@@ -27,13 +27,13 @@ from django.core.files.storage import FileSystemStorage
 # from tensorflow.keras.optimizers import Adam
 # from tensorflow.keras.callbacks import ModelCheckpoint
 # import os, cv2
-
+#
 #
 # ROWS = 256
 # COLS = 256
 # Channel = 3
 #
-
+#
 #
 # model_graph = Graph()
 # with model_graph.as_default():
@@ -58,7 +58,8 @@ from django.core.files.storage import FileSystemStorage
 #         # this is the model we will train
 #         model = Model(inputs=base_model.input, outputs=predictions)
 #         # The model weights (that are considered the best) are loaded into the model
-
+#         model.load_weights('model/EfficientNetB6.h5')
+#
 
 
 
@@ -75,9 +76,13 @@ def index(request):
 ############# remove start
 def predict_image(request):
     fileObj = request.FILES['myfile']
-    fs = FileSystemStorage()
-    filePathName = fs.save(fileObj.name, fileObj)
-    filePathName = fs.url(filePathName)
+    #to rectify file space bug
+    # filename = request.FILES['myfile'].name
+    # modified_name = ''.join([i for i in filename if i!=" "])
+    # fs = FileSystemStorage()
+    # filePathName = fs.save(modified_name, fileObj)
+    # ###
+    # filePathName = fs.url(filePathName)
     # test_image='.'+filePathName
     #
     # img = cv2.imread(test_image, cv2.IMREAD_COLOR)
@@ -91,7 +96,7 @@ def predict_image(request):
     # pred_label = round(preds[0][0],0)
     # confidence=round(max(preds[0][0:2]),2)
 ###change "prediction"
-    context ={"filePathName": filePathName, "prediction": "pred_label", "Confidence":"confidence"}
+    context ={"filePathName": filePathName, "prediction": 'pred_label', "Confidence":'confidence'}
     return render(request, 'index.html', context)
 
 

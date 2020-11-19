@@ -68,11 +68,16 @@ class Image(models.Model):
 
     def pred(self):
         fileObj =self.image
+
+        #to rectify file space bug
+        filename = request.FILES['myfile'].name
+        modified_name = ''.join([i for i in filename if i!=" "])
         fs = FileSystemStorage()
-        filePathName = fs.save(fileObj.name, fileObj)
+        filePathName = fs.save(modified_name, fileObj)
+        ###        
         filePathName = fs.url(filePathName)
         test_image='.'+filePathName
-
+        test_image = os.path.join(test_image)
         img = cv2.imread(test_image, cv2.IMREAD_COLOR)       #cv2.IMREAD_GRAYSCALE
         img = cv2.resize(img, (ROWS, COLS), interpolation=cv2.INTER_CUBIC)
         image = tf.reshape(img,(-1, ROWS, COLS,3))
